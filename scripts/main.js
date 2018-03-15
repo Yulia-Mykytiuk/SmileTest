@@ -132,6 +132,14 @@ $(document).ready(function () {
 		e.preventDefault();
 		var index = $(this).closest('li').index();
 		reviewTabs(index);
+
+		$('.review-item').each(function () {
+			var cur_height = $(this).find('.review-text').height();
+			if (cur_height > 65) {
+				$(this).find('.review-text').addClass('overflow').find('.details').remove();
+				$(this).find('.review-text').append('<a href="#" class="details full-text">Читать полностью</a>');
+			}
+		});
 	});
 
 	$('.card-img .gallery a').click(function (e) {
@@ -179,26 +187,40 @@ $(document).ready(function () {
 
 		$(this).remove();
 
-		$.ajax({
-			url: url,
-			data: "get_info",
-			method: 'POST',
-			success: function success(data) {
-				data = JSON.parse(data);
-				if (data.html) {
-					wrap.append(data.html.toString());
+		var content = wrap.find('.hidden').html();
+		wrap.find('.hidden').remove();
+		wrap.append(content);
 
-					if (data.html.find('.review-item').length) {
-						$('.review-item').each(function () {
-							var cur_height = $(this).find('.review-text').height();
-							if (cur_height > 65) {
-								$(this).find('.review-text').addClass('overflow').append('<a href="#" class="details full-text">Читать полностью</a>');
-							}
-						});
-					}
+		if (wrap.find('.review-item').length) {
+			$('.review-item').each(function () {
+				var cur_height = $(this).find('.review-text').height();
+				if (cur_height > 65) {
+					$(this).find('.review-text').addClass('overflow').find('.details').remove();
+					$(this).find('.review-text').append('<a href="#" class="details full-text">Читать полностью</a>');
 				}
-			}
-		});
+			});
+		}
+
+		// $.ajax({
+		// 	url: url,
+		// 	data: "get_info",
+		// 	method: 'POST',
+		// 	success: function(data) {
+		// 		data = JSON.parse(data);
+		// 		if (data.html) {
+		// 			wrap.append(data.html.toString());
+
+		// 			if (data.html.find('.review-item').length) {
+		// 				$('.review-item').each(function() {
+		// 				    var cur_height = $(this).find('.review-text').height();
+		// 				    if (cur_height > 65) {
+		// 				    	$(this).find('.review-text').addClass('overflow').append('<a href="#" class="details full-text">Читать полностью</a>');
+		// 				    }
+		// 				});
+		// 			}
+		// 		}
+		// 	}
+		// });
 	});
 	// /click event to call ajax for loading more data
 

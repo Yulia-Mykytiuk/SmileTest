@@ -273,6 +273,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   letter-spacing: -.7px;
 }
 
+.hidden {
+  display: none;
+}
+
 .el-button {
   font-weight: 700;
   font-size: 15px;
