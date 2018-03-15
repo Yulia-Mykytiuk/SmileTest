@@ -171,20 +171,18 @@ $(document).ready(function () {
 	$('.js-more').on('click', function (e) {
 		e.preventDefault();
 		var url = $(this).attr('data-url');
+		var wrap = $(this).prev('.js-wrapper');
+
 		if ($(this).closest('.js-wrapper').length) {
-			var wrap = $(this).closest('.js-wrapper');
-			var value = $(this).closest('.js-wrapper').html();
-		} else {
-			var wrap = $(this).prev('.js-wrapper');
-			var value = $(this).prev('.js-wrapper').html();
+			wrap = $(this).closest('.js-wrapper');
 		}
 
 		$(this).remove();
 
 		$.ajax({
 			url: url,
-			data: value,
-			method: 'GET',
+			data: "get_info",
+			method: 'POST',
 			success: function success(data) {
 				data = JSON.parse(data);
 				if (data.html) {
